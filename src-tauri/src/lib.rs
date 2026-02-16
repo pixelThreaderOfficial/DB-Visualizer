@@ -9,6 +9,8 @@ use std::sync::{Arc, Mutex};
 use std::time::Instant;
 use tauri::{Emitter, Manager, State};
 
+pub mod version;
+
 fn log_debug(message: &str, data: serde_json::Value, hypothesis_id: &str) {
     let log_path = r"d:\Commercial\pixelThreader\pixelThreader OpenSource\DB Visualizer\db-visualizer\.cursor\debug.log";
     if let Ok(mut file) = OpenOptions::new().create(true).append(true).open(log_path) {
@@ -586,7 +588,8 @@ pub fn run() {
             get_db_stats,
             delete_database,
             start_db_analysis,
-            stop_db_analysis
+            stop_db_analysis,
+            version::versionno
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

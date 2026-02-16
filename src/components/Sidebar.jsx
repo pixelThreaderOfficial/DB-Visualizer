@@ -1,17 +1,27 @@
-import React from 'react';
+import { invoke } from "@tauri-apps/api/core";
+import React, { useState, useEffect } from 'react';
 import { Listbox, ListboxItem } from '@heroui/react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { 
-  LayoutDashboard, 
-  Database, 
-  PlusCircle, 
-  Table, 
-  BarChart3 
+import {
+  LayoutDashboard,
+  Database,
+  PlusCircle,
+  Table,
+  BarChart3
 } from 'lucide-react';
+
+
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [version, setVersion] = useState('');
+
+  useEffect(() => {
+    invoke("versionno", { prefix: true })
+      .then(setVersion)
+      .catch(err => console.error("Failed to fetch version:", err));
+  }, []);
 
   const menuItems = [
     { id: '/', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
@@ -32,29 +42,29 @@ const Sidebar = () => {
         </div>
         <h1 className="text-2xl font-bold tracking-tight">DB Visualizer</h1>
       </div>
-      
+
       <div className="flex-1">
-        <Listbox 
+        <Listbox
           aria-label="Navigation"
           selectedKeys={new Set([location.pathname])}
           onSelectionChange={(keys) => {
-              const selected = Array.from(keys)[0];
-              if (selected) navigate(selected);
+            const selected = Array.from(keys)[0];
+            if (selected) navigate(selected);
           }}
           selectionMode="single"
           variant="flat"
         >
           {menuItems.map((item) => (
-            <ListboxItem 
-              key={item.id} 
+            <ListboxItem
+              key={item.id}
               textValue={item.label}
               className="py-3 px-4 rounded-xl mb-1 data-[selected=true]:bg-primary/10 data-[selected=true]:text-primary transition-all duration-200"
             >
               <div className="flex items-center gap-4 w-full">
-                  <div className="flex items-center justify-center w-5">
-                    {item.icon}
-                  </div>
-                  <span className="font-medium cursor-pointer">{item.label}</span>
+                <div className="flex items-center justify-center w-5">
+                  {item.icon}
+                </div>
+                <span className="font-medium cursor-pointer">{item.label}</span>
               </div>
             </ListboxItem>
           ))}
@@ -62,7 +72,7 @@ const Sidebar = () => {
       </div>
 
       <div className="p-4 bg-muted/30 rounded-2xl border border-border">
-        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">v0.1.0 Beta</p>
+        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">{version || '...'} Beta</p>
         <p className="text-sm text-muted-foreground">SQLite DB Visualizer</p>
       </div>
     </aside>
