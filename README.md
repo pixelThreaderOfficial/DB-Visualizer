@@ -22,22 +22,22 @@ DB Visualizer is a powerful, modern, and lightweight application designed for ef
 <p align="left">
  <b>Dashboard</b>: Quick access to recent databases and high-level platform statistics.
     <p align="center">
-  <img src="public/app_previews/dashboard.png" alt="Dashboard" width="45%" style="margin: 5px;" />
+  <img src="public/app_previews/dashboard.png" alt="Dashboard" width="91%" style="margin: 5px;" />
   <br />
  </p>
  <b>All Databases</b>: Manage your library of SQLite files with detailed metadata and access tracking.
     <p align="center">
-  <img src="public/app_previews/all_databases.png" alt="All Databases" width="45%" style="margin: 5px;" />
+  <img src="public/app_previews/all_databases.png" alt="All Databases" width="91%" style="margin: 5px;" />
   <br />
  </p>
  <b>Import Database</b>: Simple drag-and-drop or file selection interface for importing new databases.
     <p align="center">
-  <img src="public/app_previews/importdb.png" alt="Import Database" width="45%" style="margin: 5px;" />
+  <img src="public/app_previews/importdb.png" alt="Import Database" width="91%" style="margin: 5px;" />
   <br />
  </p>
  <b>Table View</b>: High-performance data exploration with pagination and instant search.
     <p align="center">
-  <img src="public/app_previews/dbtables.png" alt="Table View" width="45%" style="margin: 5px;" />
+  <img src="public/app_previews/dbtables.png" alt="Table View" width="91%" style="margin: 5px;" />
   <br />
  </p>
  <b>Analytics</b>: Deep visual insights into character frequencies and automatic data type detection.
