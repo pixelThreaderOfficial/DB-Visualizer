@@ -58,10 +58,31 @@ const Analytics = () => {
 
     const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d', '#ffc658'];
     const TYPE_COLORS = {
-        numeric: '#0088FE',
-        alphabets: '#00C49F',
-        special: '#FFBB28',
-        unknown: '#FF8042'
+        numeric: 'var(--primary)',
+        alphabets: 'var(--chart-2)',
+        special: 'var(--chart-3)',
+        unknown: 'var(--muted)'
+    };
+
+    const rowChartConfig = {
+        row_count: {
+            label: "Rows",
+            color: "var(--primary)",
+        },
+    };
+
+    const charChartConfig = {
+        count: {
+            label: "Count",
+            color: "var(--secondary)",
+        },
+    };
+
+    const pieChartConfig = {
+        Numeric: { label: "Numeric", color: "var(--primary)" },
+        Alphabets: { label: "Alphabets", color: "var(--chart-2)" },
+        Special: { label: "Special", color: "var(--chart-3)" },
+        Unknown: { label: "Unknown", color: "var(--muted)" },
     };
 
     const fetchData = async () => {
@@ -347,38 +368,33 @@ const Analytics = () => {
                         <Chip size="sm" variant="flat" color="primary">Distribution</Chip>
                     </div>
                     <div className="flex-1 min-h-0">
-                        <ResponsiveContainer width="100%" height="100%">
+                        <ChartContainer config={rowChartConfig} className="h-full w-full aspect-auto">
                             <BarChart data={tables}>
-                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
                                 <XAxis
                                     dataKey="name"
                                     axisLine={false}
                                     tickLine={false}
-                                    tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
+                                    tick={{ fill: 'var(--muted-foreground)', fontSize: 12 }}
                                     dy={10}
                                 />
                                 <YAxis
                                     axisLine={false}
                                     tickLine={false}
-                                    tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
+                                    tick={{ fill: 'var(--muted-foreground)', fontSize: 12 }}
                                 />
-                                <Tooltip
-                                    cursor={{ fill: 'hsl(var(--muted)/0.5)' }}
-                                    contentStyle={{
-                                        backgroundColor: 'hsl(var(--background))',
-                                        borderColor: 'hsl(var(--border))',
-                                        borderRadius: '12px',
-                                        boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)'
-                                    }}
+                                <ChartTooltip
+                                    cursor={{ fill: 'var(--muted)', opacity: 0.1 }}
+                                    content={<ChartTooltipContent />}
                                 />
                                 <Bar
                                     dataKey="row_count"
-                                    fill="hsl(var(--primary))"
+                                    fill="var(--color-row_count)"
                                     radius={[6, 6, 0, 0]}
                                     maxBarSize={60}
                                 />
                             </BarChart>
-                        </ResponsiveContainer>
+                        </ChartContainer>
                     </div>
                 </Card>
 
@@ -395,7 +411,7 @@ const Analytics = () => {
                     </div>
                     <div className="flex-1 min-h-0">
                         {analysisResults ? (
-                            <ResponsiveContainer width="100%" height="100%">
+                            <ChartContainer config={pieChartConfig} className="h-full w-full aspect-auto">
                                 <PieChart>
                                     <Pie
                                         data={typeData}
@@ -411,12 +427,8 @@ const Analytics = () => {
                                             <Cell key={`cell-${index}`} fill={entry.fill} strokeWidth={0} />
                                         ))}
                                     </Pie>
-                                    <Tooltip
-                                        contentStyle={{
-                                            backgroundColor: 'hsl(var(--background))',
-                                            borderColor: 'hsl(var(--border))',
-                                            borderRadius: '12px',
-                                        }}
+                                    <ChartTooltip
+                                        content={<ChartTooltipContent hideLabel />}
                                     />
                                     <Legend
                                         verticalAlign="bottom"
@@ -425,7 +437,7 @@ const Analytics = () => {
                                         formatter={(value) => <span className="text-xs font-medium text-muted-foreground">{value}</span>}
                                     />
                                 </PieChart>
-                            </ResponsiveContainer>
+                            </ChartContainer>
                         ) : (
                             <div className="flex flex-col items-center justify-center h-full text-center gap-4">
                                 <Info size={48} className="text-muted-foreground opacity-20" />
@@ -450,9 +462,9 @@ const Analytics = () => {
                     </div>
                     <div className="flex-1 min-h-0">
                         {analysisResults ? (
-                            <ResponsiveContainer width="100%" height="100%">
+                            <ChartContainer config={charChartConfig} className="h-full w-full aspect-auto">
                                 <BarChart data={charFrequencyData} layout="vertical">
-                                    <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} stroke="hsl(var(--border))" />
+                                    <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} stroke="var(--border)" />
                                     <XAxis type="number" hide />
                                     <YAxis
                                         dataKey="char"
@@ -460,25 +472,20 @@ const Analytics = () => {
                                         axisLine={false}
                                         tickLine={false}
                                         width={40}
-                                        tick={{ fill: 'hsl(var(--foreground))', fontSize: 16, fontWeight: 'bold' }}
+                                        tick={{ fill: 'var(--foreground)', fontSize: 16, fontWeight: 'bold' }}
                                     />
-                                    <Tooltip
-                                        cursor={{ fill: 'hsl(var(--muted)/0.5)' }}
-                                        contentStyle={{
-                                            backgroundColor: 'hsl(var(--background))',
-                                            borderColor: 'hsl(var(--border))',
-                                            borderRadius: '12px',
-                                        }}
-                                        formatter={(value, name, props) => [value.toLocaleString(), `Count (${props.payload.unicode})`]}
+                                    <ChartTooltip
+                                        cursor={{ fill: 'var(--muted)', opacity: 0.1 }}
+                                        content={<ChartTooltipContent />}
                                     />
                                     <Bar
                                         dataKey="count"
-                                        fill="hsl(var(--secondary))"
+                                        fill="var(--color-count)"
                                         radius={[0, 6, 6, 0]}
                                         maxBarSize={30}
                                     />
                                 </BarChart>
-                            </ResponsiveContainer>
+                            </ChartContainer>
                         ) : (
                             <div className="flex flex-col items-center justify-center h-full text-center gap-4">
                                 <Type size={48} className="text-muted-foreground opacity-20" />

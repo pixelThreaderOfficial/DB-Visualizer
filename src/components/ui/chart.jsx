@@ -62,13 +62,13 @@ const ChartStyle = ({
           .map(([theme, prefix]) => `
 ${prefix} [data-chart=${id}] {
 ${colorConfig
-.map(([key, itemConfig]) => {
-const color =
-  itemConfig.theme?.[theme] ||
-  itemConfig.color
-return color ? `  --color-${key}: ${color};` : null
-})
-.join("\n")}
+              .map(([key, itemConfig]) => {
+                const color =
+                  itemConfig.theme?.[theme] ||
+                  itemConfig.color
+                return color ? `  --color-${key}: ${color};` : null
+              })
+              .join("\n")}
 }
 `)
           .join("\n"),
@@ -154,7 +154,7 @@ const ChartTooltipContent = React.forwardRef((
           .map((item, index) => {
             const key = `${nameKey || item.name || item.dataKey || "value"}`
             const itemConfig = getPayloadConfigFromPayload(config, item, key)
-            const indicatorColor = color || item.payload.fill || item.color
+            const indicatorColor = color || itemConfig?.color || item.payload.fill || item.color
 
             return (
               <div
@@ -277,8 +277,8 @@ function getPayloadConfigFromPayload(
 
   const payloadPayload =
     "payload" in payload &&
-    typeof payload.payload === "object" &&
-    payload.payload !== null
+      typeof payload.payload === "object" &&
+      payload.payload !== null
       ? payload.payload
       : undefined
 

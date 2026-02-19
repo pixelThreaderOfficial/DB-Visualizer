@@ -26,3 +26,4 @@ dist-ssr
 HEROUI_SYSTEM_PROMPT.md
 .cursor/mcp.json
 src-tauri/Cargo.lock
+RELEASE.md
