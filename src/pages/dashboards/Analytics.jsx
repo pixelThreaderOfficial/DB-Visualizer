@@ -74,7 +74,7 @@ const Analytics = () => {
     const charChartConfig = {
         count: {
             label: "Count",
-            color: "var(--secondary)",
+            color: "var(--chart-1)",
         },
     };
 
