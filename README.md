@@ -1,7 +1,7 @@
 # DB Visualizer
 
 <p align="center">
-  <img src="public/temp_logo/temp.png" alt="DB Visualizer Logo" width="200" height="200" />
+  <img src="public/temp_logo/temp.png " alt="DB Visualizer Logo" width="200" height="200" />
 </p>
 
 DB Visualizer is a powerful, modern, and lightweight application designed for effortless SQLite database exploration and analysis. Built with **Tauri**, **React**, and **HeroUI**, it provides a high-performance experience with a sleek, premium interface.
